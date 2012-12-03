@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<SyntaxDefinition name="ASM" extensions=".s" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Comment" foreground="#FF007A29" />
+  <Color name="Digits" foreground="#FF0066FF" />
+  <Color name="Label" foreground="#FF660033" />
+  <Color name="Register" foreground="#FFE68A00"/>
+  <Color name="Directive" foreground="#FF008B8B"/>
+  <Color name="Identifier" foreground="#FFA30000"/>
+  <Color name="IntegerLiteral" foreground="#FF19A3D1" />
+  <Color name="ASMKeywords" foreground="#FF0000FF" />
+  <RuleSet ignoreCase="true">
+    
+    <Keywords color="ASMKeywords">
+      <Word>mov</Word>
+      <Word>bl</Word>
+      <Word>b</Word>
+      <Word>ldr</Word>
+    </Keywords>
+      
+    <Span color="Directive">
+      <Begin>\.</Begin>
+    </Span>
+    <Span color="Comment">
+      <Begin>//</Begin>
+    </Span>
+    <Span color="Comment" multiline="true">
+      <Begin>/\*</Begin>
+      <End>\*/</End>
+    </Span>
+    <Rule color="IntegerLiteral">[\#]([0-9])+</Rule>
+    <Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+    <Rule color="Register">\b[rR][0-9]+</Rule>
+    <Rule color="Label">\b[_a-zA-Z]\w*[\$]*[:]</Rule>
+    <Rule color="Identifier">\b[_a-zA-Z]\w*[\$]*</Rule>
+  </RuleSet>
+</SyntaxDefinition>
+   
+

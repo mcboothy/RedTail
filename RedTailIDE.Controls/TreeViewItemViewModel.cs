@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using RedTail.Wpf;
+using RedTail.WpfLib;
 
 namespace RedTailIDE.Controls
 {

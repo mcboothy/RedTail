@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace RedTail.Wpf
+namespace RedTail.WpfLib
 {
     public class ObservableObject : INotifyPropertyChanged
     {

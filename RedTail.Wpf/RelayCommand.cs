@@ -2,13 +2,13 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace RedTail.Wpf
+namespace RedTail.WpfLib
 {
     /// <summary>
     /// Provides a wrapper for ICommand that allows the user to supply their
     /// own action and predicate to satisfy the ICommand callbadks
     /// </summary>
-    class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         protected readonly Action<object> Action;
         protected readonly Predicate<object> Predicate;

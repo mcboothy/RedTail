@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using AvalonDock.Layout;
+using RedTail.WpfLib;
 using RedTailIDE.Controls;
 using RedTailIDE.Domain;
 
@@ -11,6 +13,8 @@ namespace RedTailIDE
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static int OpenDocumentRequest = 1;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -21,6 +25,11 @@ namespace RedTailIDE
 
             // TODO: Load from resource or from web even, save cached copy so if user doesn't connect you have something to display
             startPage.webBrowser.NavigateToString("<HTML><H2><B>This page comes using String</B><P></P></H2>");
+            EventAggregator.Subscribe(OpenDocumentRequest, Handler);
+        }
+
+        private void Handler(object data)
+        {
         }
 
         private void dockManager_DocumentClosing(object sender, AvalonDock.DocumentClosingEventArgs e)

@@ -95,9 +95,9 @@
       <Project>{6C55B776-26D4-4DB3-A6AB-87E783B2F3D1}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RedTail.Wpf\RedTail.Wpf.csproj">
+    <ProjectReference Include="..\RedTail.Wpf\RedTail.WpfLib.csproj">
       <Project>{42DA3FA4-4489-4AF2-BF72-757E104D521F}</Project>
-      <Name>RedTail.Wpf</Name>
+      <Name>RedTail.WpfLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\RedTailIDE.Domain\RedTailIDE.Domain.csproj">
       <Project>{E1AFB5D5-AE0B-4254-AB05-21827B34B84B}</Project>

@@ -1,8 +1,83 @@
 ﻿<Window x:Class="RedTail_Wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:RedTailIDE.Controls;assembly=RedTailIDE.Controls"
+        xmlns:avalondock="http://avalondock.codeplex.com"
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:RedTail_Wpf="clr-namespace:RedTail_Wpf"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+    <Window.Resources>
+        <RedTail_Wpf:MainWindowViewModel x:Key="ViewModel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource ViewModel}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Command="{Binding Path=OpenFileCommand}" />
+                <MenuItem Header="Save" Command="{Binding SaveFile}" />
+                <Separator />
+                <MenuItem Header="Exit" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Command="Undo" />
+                <MenuItem Command="Redo" />
+                <Separator/>
+                <MenuItem Command="Cut" />
+                <MenuItem Command="Copy" />
+                <MenuItem Command="Paste" />
+            </MenuItem>
+        </Menu>
+        <avalondock:DockingManager Grid.Row="2" x:Name="dockManager" AllowMixedOrientation="True">
+            <avalondock:DockingManager.Theme>
+                <avalondock:AeroTheme/>
+            </avalondock:DockingManager.Theme>
+            <avalondock:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding IconSource}" Margin="0,0,4,0"/>
+                        <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </DataTemplate>
+            </avalondock:DockingManager.DocumentHeaderTemplate>
+            <avalondock:LayoutRoot >
+                <avalondock:LayoutPanel Orientation="Horizontal">
+                    <avalondock:LayoutDocumentPaneGroup>
+                        <avalondock:LayoutDocumentPane>
+                            <!--<avalondock:LayoutDocument ContentId="startPage" Title="Start Page">
+                                <local:StartPage x:Name="startPage" />
+                            </avalondock:LayoutDocument>-->
+                            <!--<avalonDock:LayoutDocument ContentId="document1" Title="Document 1">
+                                <Button Click="Button_Click" Content="Add Document" Height="26" Width="Auto" />                                
+                            </avalonDock:LayoutDocument>
+                            <avalonDock:LayoutDocument ContentId="document2" Title="Document 2">
+                                <TextBox Text="{Binding TestTimer, Mode=OneWay, StringFormat='Document 2 Attached to Timer ->\{0\}'}"/>
+                            </avalonDock:LayoutDocument>-->
+                        </avalondock:LayoutDocumentPane>
+                    </avalondock:LayoutDocumentPaneGroup>
+                </avalondock:LayoutPanel>
+
+                <!--<avalondock:LayoutRoot.LeftSide>
+                    <avalondock:LayoutAnchorSide>
+                        <avalondock:LayoutAnchorGroup>
+                            <avalondock:LayoutAnchorable Title="AutoHide1 Content" ContentId="AutoHide1Content" >
+                                <TextBox Text="{Binding TestTimer, Mode=OneWay, StringFormat='AutoHide Attached to Timer ->\{0\}'}"/>
+                            </avalondock:LayoutAnchorable>
+                            <avalondock:LayoutAnchorable Title="AutoHide2 Content" ContentId="AutoHide2Content">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBox/>
+                                    <TextBox/>
+                                </StackPanel>
+                            </avalondock:LayoutAnchorable>
+                        </avalondock:LayoutAnchorGroup>
+                    </avalondock:LayoutAnchorSide>
+                </avalondock:LayoutRoot.LeftSide>-->
+            </avalondock:LayoutRoot>
+        </avalondock:DockingManager>
+
     </Grid>
+
 </Window>
