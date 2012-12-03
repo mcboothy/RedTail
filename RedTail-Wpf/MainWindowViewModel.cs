@@ -7,10 +7,21 @@ namespace RedTail_Wpf
     public class MainWindowViewModel
     {
         private RelayCommand _fileOpenCommand;
+        private RelayCommand _fileSaveCommand;
 
-        public ICommand OpenFileCommand 
+        public ICommand MenuFileOpenCommand 
         {
             get { return GetFileOpenCommand(); }
+        }
+
+        public ICommand MenuFileSaveCommand
+        {
+            get { return GetFileSaveCommand(); }
+        }
+
+        private ICommand GetFileSaveCommand()
+        {
+            return _fileSaveCommand ?? (_fileSaveCommand = new RelayCommand((action) => HandleFileOpen()));
         }
 
         public MainWindow View

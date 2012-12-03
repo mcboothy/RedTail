@@ -17,8 +17,9 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Header="Open" Command="{Binding Path=OpenFileCommand}" />
-                <MenuItem Header="Save" Command="{Binding SaveFile}" />
+                <MenuItem Header="Open" Command="{Binding Path=MenuFileOpenCommand}" />
+                <MenuItem Header="Save" Command="{Binding MenuFileSaveCommand}" />
+                <MenuItem Header="Save As" Command="{Binding MenuFileSaveAsCommand}" />
                 <Separator />
                 <MenuItem Header="Exit" />
             </MenuItem>

@@ -60,7 +60,7 @@
             </Grid.ColumnDefinitions>
             <avalonEdit:TextEditor
 				Name="textEditor"
-				FontFamily="Consolas"
+				FontFamily="Courier New"
 				FontSize="10pt"
 				SyntaxHighlighting="C#"
 			>Welcome to AvalonEdit!
