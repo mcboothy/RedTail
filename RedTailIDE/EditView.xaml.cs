@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -7,13 +6,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
-using AvalonEdit.Controls;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Microsoft.Win32;
 
-namespace WpfApplication2
+namespace RedTailIDE
 {
     /// <summary>
     /// Interaction logic for EditControl.xaml
@@ -26,7 +24,7 @@ namespace WpfApplication2
 
             // Load our custom highlighting definition
             IHighlightingDefinition customHighlighting;
-            using (var s = typeof(EditView).Assembly.GetManifestResourceStream("WpfApplication2.CustomHighlighting.xshd"))
+            using (var s = typeof(EditView).Assembly.GetManifestResourceStream("RedTailIDE.CustomHighlighting.xshd"))
             {
                 if (s == null)
                     throw new InvalidOperationException("Could not find embedded resource");
@@ -94,10 +92,10 @@ namespace WpfApplication2
             completionWindow = new CompletionWindow(textEditor.TextArea);
             // provide AvalonEdit with the data:
             var data = completionWindow.CompletionList.CompletionData;
-            data.Add(new WpfApplication2.MyCompletionData("Item1"));
-            data.Add(new WpfApplication2.MyCompletionData("Item2"));
-            data.Add(new WpfApplication2.MyCompletionData("Item3"));
-            data.Add(new WpfApplication2.MyCompletionData("Another item"));
+            data.Add(new MyCompletionData("Item1"));
+            data.Add(new MyCompletionData("Item2"));
+            data.Add(new MyCompletionData("Item3"));
+            data.Add(new MyCompletionData("Another item"));
             completionWindow.Show();
             completionWindow.Closed += delegate
                                            {
@@ -137,7 +135,7 @@ namespace WpfApplication2
                         break;
                     case "C#":
                         textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.CSharp.CSharpIndentationStrategy(textEditor.Options);
-                        _foldingStrategy = new WpfApplication2.RegionFoldingStrategy();
+                        _foldingStrategy = new RegionFoldingStrategy();
                         break;
                     case "C++":
                     case "PHP":

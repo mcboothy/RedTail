@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using MyWpfLibrary;
+﻿using System.Collections.ObjectModel;
+using RedTail.Wpf;
 
-namespace AvalonEdit.Controls
+namespace RedTailIDE.Controls
 {
     public class TreeViewItemViewModel : ObservableObject, ITreeViewItemViewModel
     {

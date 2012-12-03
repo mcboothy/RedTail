@@ -4,7 +4,7 @@ using System.Text;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 
-namespace WpfApplication2
+namespace RedTailIDE
 {
     public class RegionFoldingStrategy : AbstractFoldingStrategy
     {

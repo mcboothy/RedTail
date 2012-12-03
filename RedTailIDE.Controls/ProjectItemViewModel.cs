@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AvalonEdit.Domain;
+﻿using System.Linq;
+using RedTailIDE.Domain;
 
-namespace AvalonEdit.Controls
+namespace RedTailIDE.Controls
 {
     public class ProjectItemViewModel : TreeViewItemViewModel
     {

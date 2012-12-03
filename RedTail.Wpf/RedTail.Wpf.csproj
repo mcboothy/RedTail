@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E1AFB5D5-AE0B-4254-AB05-21827B34B84B}</ProjectGuid>
+    <ProjectGuid>{42DA3FA4-4489-4AF2-BF72-757E104D521F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedTailIDE.Domain</RootNamespace>
-    <AssemblyName>RedTailIDE.Domain</AssemblyName>
+    <RootNamespace>RedTail.Wpf</RootNamespace>
+    <AssemblyName>RedTail.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,17 +39,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IProjectItem.cs" />
-    <Compile Include="Project.cs" />
-    <Compile Include="ProjectLoader.cs" />
-    <Compile Include="ProjectDirectory.cs" />
-    <Compile Include="ProjectFile.cs" />
+    <Compile Include="ObservableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Project.xml" />
+    <Compile Include="RelayCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

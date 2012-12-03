@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
-namespace AvalonEdit.Controls
+namespace RedTailIDE.Controls
 {
     public class FolderImageConverter : IValueConverter
     {

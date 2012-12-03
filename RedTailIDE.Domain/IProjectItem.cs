@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AvalonEdit.Domain
+namespace RedTailIDE.Domain
 {
     public enum ItemType
     {

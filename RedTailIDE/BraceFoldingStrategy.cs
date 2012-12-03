@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 
-namespace AvalonEdit.Controls
+namespace RedTailIDE
 {
 	/// <summary>
 	/// Allows producing foldings from a document based on braces.

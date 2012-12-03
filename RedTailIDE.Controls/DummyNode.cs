@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace AvalonEdit.Controls
+﻿namespace RedTailIDE.Controls
 {
     class DummyNode : TreeViewItemViewModel
     {

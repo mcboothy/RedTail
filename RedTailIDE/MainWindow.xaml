@@ -1,8 +1,8 @@
-﻿<Window xmlns:my="clr-namespace:AvalonEdit.Controls;assembly=AvalonEdit.Controls"  x:Class="WpfApplication2.MainWindow"
+﻿<Window xmlns:my="clr-namespace:RedTailIDE.Controls;assembly=RedTailIDE.Controls"  x:Class="RedTailIDE.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:avalonDock="http://avalondock.codeplex.com"
-        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:local="clr-namespace:WpfApplication2"
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:local="clr-namespace:RedTailIDE"
         Title="MainWindow" Height="380" Width="649">
     <Grid>
         <Grid.RowDefinitions>
