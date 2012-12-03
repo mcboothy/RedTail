@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>bleh</Name>
+  <Location>c:\dev\timer-test</Location>
+  <Files>
+    <InputFile>
+      <Path>main.c</Path>
+    </InputFile>
+  </Files>
+  <Libraries>
+    <Library>
+      <Name>io</Name>
+      <Location>libs\sys\io\raspberrypi</Location>
+      <Files>
+        <InputFile>
+          <Path>gpio.s</Path>
+        </InputFile>
+      </Files>
+    </Library>
+    <Library>
+      <Name>timer</Name>
+      <Location>libs\timer\raspberrypi</Location>
+      <Files>
+        <InputFile>
+          <Path>systemTimer.s</Path>
+        </InputFile>
+      </Files>
+    </Library>
+  </Libraries>
+  <Options>
+    <ListFile>bleh.list</ListFile>
+    <MapFile>bleh.map</MapFile>
+  </Options>
+</Project>
