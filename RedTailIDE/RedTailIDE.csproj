@@ -133,10 +133,6 @@
       <Project>{6C55B776-26D4-4DB3-A6AB-87E783B2F3D1}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RedTail.Wpf\RedTail.Wpf.csproj">
-      <Project>{42DA3FA4-4489-4AF2-BF72-757E104D521F}</Project>
-      <Name>RedTail.Wpf</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\codewindow.png" />
