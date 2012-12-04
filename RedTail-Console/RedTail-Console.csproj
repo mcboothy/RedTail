@@ -49,10 +49,6 @@
   <ItemGroup>
     <Compile Include="Domain\BuildConfiguration.cs" />
     <Compile Include="Element.cs" />
-    <Compile Include="Mapping\AutoMapperExtensions.cs" />
-    <Compile Include="Mapping\ConfigurationToDomainObject.cs" />
-    <Compile Include="Mapping\DomainMapper.cs" />
-    <Compile Include="Mapping\IMapper.cs" />
     <Compile Include="FileElement.cs" />
     <Compile Include="ObjectStructure.cs" />
     <Compile Include="Program.cs" />
@@ -75,6 +71,7 @@
       <Name>RedTailLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
