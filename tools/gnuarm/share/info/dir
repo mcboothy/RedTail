@@ -46,3 +46,6 @@ Individual utilities
 * strip: (binutils)strip.         Discard symbols.
 * windmc: (binutils)windmc.	  Generator for Windows message resources.
 * windres: (binutils)windres.	  Manipulate Windows resources.
+
+GNU Libraries
+* libquadmath: (libquadmath).                  GCC Quad-Precision Math Library

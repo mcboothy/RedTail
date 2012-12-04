@@ -1,5 +1,5 @@
 # -*- python -*-
-# Copyright (C) 2009 Free Software Foundation, Inc.
+# Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@ import gdb
 import os
 import os.path
 
-pythondir = '/home/Scott/armcross/install/share/gcc-4.5.1/python'
-libdir = '/home/Scott/armcross/install/arm-none-eabi/lib'
+pythondir = '/home/Scott/gnuarm4_6_3/install/share/gcc-4.6.3/python'
+libdir = '/home/Scott/gnuarm4_6_3/install/arm-none-eabi/lib'
 
 # This file might be loaded when there is no current objfile.  This
 # can happen if the user loads it manually.  In this case we don't
@@ -50,10 +50,10 @@ if gdb.current_objfile () is not None:
     dotdots = ('..' + os.sep) * len (libdir.split (os.sep))
 
     objfile = gdb.current_objfile ().filename
-    dir = os.path.join (os.path.dirname (objfile), dotdots, pythondir)
+    dir_ = os.path.join (os.path.dirname (objfile), dotdots, pythondir)
 
-    if not dir in sys.path:
-        sys.path.insert(0, dir)
+    if not dir_ in sys.path:
+        sys.path.insert(0, dir_)
 
 # Load the pretty-printers.
 from libstdcxx.v6.printers import register_libstdcxx_printers
