@@ -73,60 +73,79 @@ namespace RedTail_Console
                 return;
             }
 
-            _configSection =
-                   (BuildConfigurationSection)System.Configuration.ConfigurationManager.GetSection(
-                   "buildPropertiesGroup/buildProperties");
-
-            _environmentSection = (EnvironmentConfigurationSection)System.Configuration.ConfigurationManager.GetSection(
-                   "environmentPropertiesGroup/environmentProperties");
-
-            var projectFile = args[0];
-            var project = ReadProjectFromFile(projectFile);
-            if (project == null)
+            try
             {
-                Console.WriteLine("Could not open  project file {0}", projectFile);
-                return;
+                _configSection =
+                    (BuildConfigurationSection) System.Configuration.ConfigurationManager.GetSection(
+                        "buildPropertiesGroup/buildProperties");
+
+                _environmentSection =
+                    (EnvironmentConfigurationSection) System.Configuration.ConfigurationManager.GetSection(
+                        "environmentPropertiesGroup/environmentProperties");
+
+                var projectFile = args[0];
+                var project = ReadProjectFromFile(projectFile);
+                if (project == null)
+                {
+                    Console.WriteLine("Could not open  project file {0}", projectFile);
+                    return;
+                }
+
+                var startup = _configSection.Startup;
+                var toolpath = _configSection.ToolPath + @"\bin";
+
+                // set environment
+                SetPath(Path.GetFullPath(toolpath));
+
+                var outputPaths = new Dictionary<string, string>();
+                var outputObjects = new List<CompiledObject>();
+                var libraryPaths = new Dictionary<string, string>();
+
+                Console.WriteLine("Building bootstrap files");
+                if (!CompileProjectFile(libraryPaths, outputObjects, outputPaths, Path.GetFullPath(startup))) return;
+
+                // compile the libraries
+                Console.WriteLine("Building libraries");
+                if (project.Libraries.Any(lib => !BuildLibrary(outputPaths, libraryPaths, lib)))
+                {
+                    return;
+                }
+
+                // compile each object
+                Console.WriteLine("Compiling project files");
+                if (
+                    project.Files.Any(
+                        file =>
+                        !CompileProjectFile(libraryPaths, outputObjects, outputPaths,
+                                            Path.Combine(project.Location, file.Path))))
+                {
+                    return;
+                }
+
+                if( project.Options == null )
+                {
+                    project.Options = new LibraryOptions();
+                }
+
+                Console.WriteLine("Linking output files");
+                LinkObjects(_configSection.LinkerTool, _configSection.LinkerScript, _configSection.ElfFilename,
+                            string.IsNullOrWhiteSpace(project.Options.MapFile)
+                                ? ""
+                                : Path.Combine(project.Location, project.Options.MapFile),
+                            outputObjects,
+                            project.Libraries,
+                            project.Location);
+
+                Console.WriteLine("Creating target");
+                CreateTarget(project.Location, project.Options.ListFile);
+
+                Console.WriteLine("Cleaning up");
+                CleanUp(outputPaths, project);
             }
-
-            var startup = _configSection.Startup;
-            var toolpath = _configSection.ToolPath + @"\bin";
-
-            // set environment
-            SetPath(Path.GetFullPath(toolpath));
-
-            var outputPaths = new Dictionary<string, string>();
-            var outputObjects = new List<CompiledObject>();
-            var libraryPaths = new Dictionary<string, string>();
-
-            Console.WriteLine("Building bootstrap files");
-            if (!CompileProjectFile(libraryPaths, outputObjects, outputPaths, Path.GetFullPath(startup) )) return;
-
-            // compile the libraries
-            Console.WriteLine("Building libraries");
-            if (project.Libraries.Any(lib => !BuildLibrary(outputPaths, libraryPaths, lib)))
+            catch(Exception ex)
             {
-                return;
+                Console.WriteLine(ex.ToString());
             }
-
-            // compile each object
-            Console.WriteLine("Compiling project files");
-            if (project.Files.Any(file => !CompileProjectFile(libraryPaths, outputObjects, outputPaths, Path.Combine(project.Location, file.Path))))
-            {
-                return;
-            }
-
-            Console.WriteLine("Linking output files");
-            LinkObjects(_configSection.LinkerTool, _configSection.LinkerScript, _configSection.ElfFilename,
-                string.IsNullOrWhiteSpace(project.Options.MapFile) ? "" : Path.Combine(project.Location, project.Options.MapFile),
-                outputObjects, 
-                project.Libraries, 
-                project.Location);
-
-            Console.WriteLine("Creating target");
-            CreateTarget(project.Location, project.Options.ListFile);
-
-            Console.WriteLine("Cleaning up");
-            CleanUp(outputPaths, project);
         }
 
         private void CleanUp(Dictionary<string, string> outputPaths, Project project)
