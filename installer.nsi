@@ -1,3 +1,6 @@
+!include "LogicLib.nsh"
+!include "EnvVarUpdate.nsh"
+
 # This installs two files, app.exe and logo.ico, creates a start menu shortcut, builds an uninstaller, and
 # adds uninstall information to the registry for Add/Remove Programs
  
@@ -10,10 +13,13 @@
 !define APPNAME "RedTail-Console"
 !define COMPANYNAME "Sandy Beach Productions"
 !define DESCRIPTION "A console based program to compile RedTail executables"
+!define TOOLS_PATH "tools\gnuarm\bin"
 # These three must be integers
 !define VERSIONMAJOR 1
 !define VERSIONMINOR 1
 !define VERSIONBUILD 1
+
+!define TOOLSDIR "$INSTDIR\${TOOLS_PATH}"
 
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  
@@ -21,15 +27,16 @@ InstallDir "C:\${APPNAME}"
  
 # rtf or txt file - remember if it is txt, it must be in the DOS text format (\r\n)
 LicenseData "license.txt"
+
 # This will be in the installer/uninstaller's title bar
 Name "${COMPANYNAME} - ${APPNAME}"
-outFile "redtail-console-setup.exe"
+OutFile "redtail-console-setup.exe"
  
 !include LogicLib.nsh
  
 # Just three pages - license agreement, install location, and installation
-page license
-page directory
+Page license
+Page directory
 Page instfiles
  
 !macro VerifyUserIsAdmin
@@ -49,7 +56,7 @@ functionEnd
  
 section "install"
 	# Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
-	setOutPath $INSTDIR
+	SetOutPath $INSTDIR
 	# Files added here should be removed by the uninstaller (see section "uninstall")
 	File "RedTail-Console\bin\Release\RedTail-Console.exe"
 	File "RedTail-Console\bin\Release\RedTail-Console.exe.config"
@@ -61,11 +68,14 @@ section "install"
 	# Add any other files for the install directory (license files, app data, etc) here
  
 	# Uninstaller - See function un.onInit and section "uninstall" for configuration
-	writeUninstaller "$INSTDIR\uninstall.exe"
- 
+	WriteUninstaller "$INSTDIR\uninstall.exe"
+
+	# Path
+	${EnvVarUpdate} $0 "PATH" "P" "HKLM" "${TOOLSDIR}"
+	
 	# Start Menu
-	createDirectory "$SMPROGRAMS\${COMPANYNAME}"
-	createShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\app.exe" "" "$INSTDIR\logo.ico"
+	CreateDirectory "$SMPROGRAMS\${COMPANYNAME}"
+	CreateShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\app.exe" "" "$INSTDIR\logo.ico"
  
 	# Registry information for add/remove programs
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "DisplayName" "${COMPANYNAME} - ${APPNAME} - ${DESCRIPTION}"
@@ -76,6 +86,7 @@ section "install"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "DisplayVersion" "$\"${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}$\""
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMajor" ${VERSIONMAJOR}
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "VersionMinor" ${VERSIONMINOR}
+	
 	# There is no option for modifying or repairing the install
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoModify" 1
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoRepair" 1
@@ -105,8 +116,7 @@ section "uninstall"
  
 	delete $INSTDIR\RedTail-Console.exe.config
 	delete $INSTDIR\RedTailLib.dll
-	delete $INSTDIR\AutoMapper.dll
-	delete $INSTDIR\AutoMapper.xml
+
 	RMDir /r $INSTDIR\libs
 	RMDir /r $INSTDIR\tools
 	RMDir /r $INSTDIR\firmware
@@ -117,6 +127,10 @@ section "uninstall"
 	# Try to remove the install directory - this will only happen if it is empty
 	rmDir $INSTDIR
  
+	# Fix up path
+	${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "${TOOLSDIR}"
+
+	
 	# Remove uninstaller information from the registry
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
 sectionEnd
