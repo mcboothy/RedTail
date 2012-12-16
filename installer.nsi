@@ -1,6 +1,3 @@
-!include "LogicLib.nsh"
-!include "EnvVarUpdate.nsh"
-
 # This installs two files, app.exe and logo.ico, creates a start menu shortcut, builds an uninstaller, and
 # adds uninstall information to the registry for Add/Remove Programs
  
@@ -13,13 +10,13 @@
 !define APPNAME "RedTail-Console"
 !define COMPANYNAME "Sandy Beach Productions"
 !define DESCRIPTION "A console based program to compile RedTail executables"
-!define TOOLS_PATH "tools\gnuarm\bin"
+!define TOOLSDIR "tools"
 # These three must be integers
 !define VERSIONMAJOR 1
 !define VERSIONMINOR 1
 !define VERSIONBUILD 1
 
-!define TOOLSDIR "$INSTDIR\${TOOLS_PATH}"
+!define GCCTOOLSPATH "$INSTDIR\${TOOLSDIR}\gnuarm\bin"
 
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  
@@ -33,7 +30,8 @@ Name "${COMPANYNAME} - ${APPNAME}"
 OutFile "redtail-console-setup.exe"
  
 !include LogicLib.nsh
- 
+!include EnvVarUpdate.nsh
+
 # Just three pages - license agreement, install location, and installation
 Page license
 Page directory
@@ -61,9 +59,11 @@ section "install"
 	File "RedTail-Console\bin\Release\RedTail-Console.exe"
 	File "RedTail-Console\bin\Release\RedTail-Console.exe.config"
 	File "RedTail-Console\bin\Release\RedTailLib.dll"
-	File /r "libs"
-	File /r "firmware"
-	File /r "tools"
+	
+	SetOutPath "$INSTDIR\${TOOLSDIR}"
+	File /r "rpi\tools\gnuarm"
+	File /r "rpi\libs"
+	File /r "rpi\firmware"
 	
 	# Add any other files for the install directory (license files, app data, etc) here
  
@@ -71,7 +71,7 @@ section "install"
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 
 	# Path
-	${EnvVarUpdate} $0 "PATH" "P" "HKLM" "${TOOLSDIR}"
+	${EnvVarUpdate} $0 "PATH" "P" "HKLM" "${GCCTOOLSPATH}"
 	
 	# Start Menu
 	CreateDirectory "$SMPROGRAMS\${COMPANYNAME}"
@@ -117,9 +117,10 @@ section "uninstall"
 	delete $INSTDIR\RedTail-Console.exe.config
 	delete $INSTDIR\RedTailLib.dll
 
-	RMDir /r $INSTDIR\libs
-	RMDir /r $INSTDIR\tools
-	RMDir /r $INSTDIR\firmware
+	RMDir /r $INSTDIR\${TOOLSDIR}\libs
+	RMDir /r $INSTDIR\${TOOLSDIR}\gnuarm
+	RMDir /r $INSTDIR\${TOOLSDIR}\firmware
+	RMDir /r $INSTDIR\${TOOLSDIR}
 	
 	# Always delete uninstaller as the last action
 	delete $INSTDIR\uninstall.exe
@@ -128,9 +129,8 @@ section "uninstall"
 	rmDir $INSTDIR
  
 	# Fix up path
-	${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "${TOOLSDIR}"
+	${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "${GCCTOOLSPATH}"
 
-	
 	# Remove uninstaller information from the registry
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
 sectionEnd
